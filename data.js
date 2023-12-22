@@ -65,7 +65,7 @@ export const fish_list = [
     "Whiting",
   ];
 
-  export const animals = [
+const animals = [
     "🐟",
     "🐠",
     "🐡",
