@@ -1,45 +1,35 @@
 import "dotenv/config";
+import getNowPlayingItem from "./api/spotify.js";
+import tmi from "tmi.js";
+import getAccessToken from "./getaccesstoken.js";
+
 const {
   SPOTIFY_CLIENT_ID: sclient_id,
   SPOTIFY_CLIENT_SECRET: sclient_secret,
   SPOTIFY_REFRESH_TOKEN: srefresh_token,
+  USER_NAME: uname,
+  ACCESS_TOKEN: token,
+  REFRESH_TOKEN: refresh_token,
+  CLIENT_ID: id,
+  CLIENT_SECRET: secret,
 } = process.env;
-const uname = process.env.USER_NAME;
-const token = process.env.ACCESS_TOKEN;
-const refresh_token = process.env.REFRESH_TOKEN;
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
-import getNowPlayingItem from "./api/spotify.js";
-import tmi from "tmi.js";
-
-function getSong(target) {
-  Promise.all([
-    getNowPlayingItem(sclient_id, sclient_secret, srefresh_token),
-  ]).then((results) => {
-    if ((results[0].isPlaying = true)) {
-      console.log(results[0]);
-      client.say(
-        target,
-        `Current song playing: ${results[0].title} - ${results[0].artist}`
-      );
-    } else {
-      client.say(target, `No song currently playing`);
-    }
-  });
-}
-const opts = {
+export const opts = {
   identity: {
     username: uname,
-    password: token,
+    password: "",
   },
   channels: ["jahmsd", "sveltebs"],
 };
+
 const client = new tmi.client(opts);
 var enabled = true;
 
 client.on("message", onMessageHandler);
 client.on("connected", onConnectedHandler);
-client.connect();
+
+getAccessToken(id, secret, refresh_token)
+  .then(client.connect())
+  .catch(console.log("Error fetching access token"));
 
 function onMessageHandler(target, context, msg, self) {
   if (self) {
@@ -52,7 +42,12 @@ function onMessageHandler(target, context, msg, self) {
   var cmdSplit = msg.split(" ");
   var actualCommand = cmdSplit[0];
   console.log("args :" + cmdSplit[1]);
-  // args = cmdSplit[1];
+  var args;
+  if (cmdSplit[1] === undefined) {
+    args = "nothing";
+  } else {
+    args = cmdSplit[1];
+  }
   if (enabled) {
     if (actualCommand === "!dice" || actualCommand === "!dice 󠀀") {
       const num = rng(6);
@@ -108,7 +103,23 @@ function rng(high) {
   const sides = high;
   return Math.floor(Math.random() * sides) + 1;
 }
-
+function getSong(target) {
+  Promise.all([getNowPlayingItem(sclient_id, sclient_secret, srefresh_token)])
+    .then((results) => {
+      if (results[0].isPlaying === true) {
+        console.log(results[0]);
+        client.say(
+          target,
+          `Current song playing: ${results[0].title} - ${results[0].artist}`
+        );
+      } else {
+        client.say(target, `No song currently playing`);
+      }
+    })
+    .catch((err) => {
+      client.say(target, `Error connecting to Spotify API`);
+    });
+}
 function fishGame(target) {
   rngeesus = rng(100);
   console.log("RNG: " + rngeesus);
