@@ -1,4 +1,4 @@
-import {opts} from "./bot.js";
+import {opts} from "../bot.js";
 const refreshtoken = async (id, secret, token) => {
   return await fetch(`https://id.twitch.tv/oauth2/token`, {
     body: `grant_type=refresh_token&refresh_token=${token}&client_id=${id}&client_secret=${secret}`,
