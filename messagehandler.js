@@ -1,7 +1,10 @@
-import fishGame from "./features/fishgame";
-import openCScase from "./features/openCScase";
-import rng from "./rng/rng";
-import getSong from "./features/getSong";
+import fishGame from "./features/fishgame.js";
+import openCScase from "./features/openCScase.js";
+import rng from "./rng/rng.js";
+import getSong from "./features/getSong.js";
+import { client } from "./bot.js";
+var enabled = true;
+var devonly = false;
 
 export default async function onMessageHandler(target, context, msg, self) {
     if (self) {
@@ -62,7 +65,7 @@ export default async function onMessageHandler(target, context, msg, self) {
               `Must select a case! (EMS (kato14, ems), gamma, cobblestone`
             );
           } else {
-            openCScase(target, args);
+            openCScase(target, args, ctx.username);
           }
         } else if (actualCommand === "buh") {
           client.say(target, `buh`);

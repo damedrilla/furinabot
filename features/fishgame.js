@@ -1,5 +1,5 @@
-import rng from "../rng/rng";
-import { fish_list } from "../fishes/data";
+import rng from "../rng/rng.js";
+import { fish_list } from "../fishes/data.js";
 export default function fishGame(target) {
   var rngeesus = rng(100);
   console.log("RNG: " + rngeesus);

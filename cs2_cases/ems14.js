@@ -36,15 +36,15 @@ export const EMS = {
   purples: [
     {
       team: "iBUYPOWER (Holo)",
-      price: "No recent prices available",
+      price: 300000,
     },
     {
       team: "mousesports (Holo)",
-      price: "No recent prices available",
+      price: 82000,
     },
     {
       team: "3DMAX (Holo)",
-      price: "No recent prices available",
+      price: 50000,
     },
     {
       team: "Clan-Mystik (Holo)",
@@ -52,25 +52,25 @@ export const EMS = {
     },
     {
       team: "Natus Vincere (Holo)",
-      price: "No recent prices available",
+      price: 36000,
     },
     {
       team: "Reason Gaming (Holo)",
-      price: "No recent prices available",
+      price: 55000,
     },
     {
       team: "Virtus.Pro (Holo)",
-      price: "No recent prices available",
+      price: 45500,
     },
     {
       team: "Vox Eminor (Holo)",
-      price: "No recent prices available",
+      price: 105000,
     },
   ],
   pinks: [
     {
       team: "ESL Wolf (Foil)",
-      price: "No recent prices available",
+      price: 105000,
     },
   ],
 };

@@ -1,5 +1,4 @@
 import "dotenv/config";
-import getNowPlayingItem from "./api/spotify.js";
 import tmi from "tmi.js";
 import getAccessToken from "./features/getaccesstoken.js";
 import onMessageHandler from "./messagehandler.js";
@@ -23,9 +22,8 @@ export const opts = {
   channels: ["jahmsd", "sveltebs"],
 };
 
-const client = new tmi.client(opts);
-var enabled = true;
-var devonly = false;
+export const client = new tmi.client(opts);
+
 
 client.on("message", onMessageHandler);
 client.on("connected", onConnectedHandler);
