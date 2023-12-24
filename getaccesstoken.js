@@ -13,6 +13,9 @@ export default async function getAccessToken(
   client_secret,
   refresh_token
 ) {
+  var id = client_id;
+  var secret = client_secret;
+  var token = refresh_token;
   try {
     const response = await refreshtoken(
       client_id,
@@ -21,10 +24,9 @@ export default async function getAccessToken(
     );
     const data = await response.json();
     console.log(data);
-    opts.identity.password = data.access_token;
-    console.log("access token: " + opts.identity.password);
+    return data.access_token;
   } catch (err) {
     console.log("Retrying access token fetch...");
-    getAccessToken(id, secret, refresh_token);
+    getAccessToken(id, secret, token);
   }
 }
