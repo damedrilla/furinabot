@@ -8,7 +8,7 @@ import { updateBal } from "./cscase_fetch/updateBalance.js";
 
 export default async function openCScase(target, args, username) {
   var seed = rng(1000);
-  
+
   var balnao;
   const katoprice = 12000;
   const isUserRegistered = await checkUser(username);
@@ -23,15 +23,16 @@ export default async function openCScase(target, args, username) {
           balnao = parseFloat(item.price) + (moolah - katoprice);
           client.say(
             target,
-            `@${username}, You unboxed ${item.team}! Price: ${item.price} Rarity: Blue || Your balance is now ${balnao}`
+            `@${username}, you unboxed: ${item.team}! Price: ${item.price} Rarity: Blue || Your balance is now ${balnao} furinaSmug`
           );
           updateBal(username, balnao);
         } else if (seed > 960 && seed <= 991) {
-          var item = EMS.purples[Math.floor(Math.random() * EMS.purples.length)];
+          var item =
+            EMS.purples[Math.floor(Math.random() * EMS.purples.length)];
           balnao = parseFloat(item.price) + (moolah - katoprice);
           client.say(
             target,
-            `@${username}, You unboxed ${item.team}! Price: ${item.price} Rarity: Purple || Your balance is now ${balnao}`
+            `@${username}, you unboxed: ${item.team}! Price: ${item.price} Rarity: Purple || Your balance is now ${balnao} furinaSmug`
           );
           updateBal(username, balnao);
         } else if (seed > 991 && seed <= 1000) {
@@ -39,12 +40,15 @@ export default async function openCScase(target, args, username) {
           balnao = parseFloat(item.price) + (moolah - katoprice);
           client.say(
             target,
-            `@${username}, You unboxed ${item.team}! Price: ${item.price} Rarity: Red || Your balance is now ${balnao}`
+            `@${username}, you unboxed: ${item.team}! Price: ${item.price} Rarity: Red || Your balance is now ${balnao} furinaSmug`
           );
           updateBal(username, balnao);
         }
       } else {
-        client.say(target, `Insufficient funds. Return again soon!`);
+        client.say(
+          target,
+          `Insufficient funds. Beg some funds with !case beg furinaSmug`
+        );
       }
     } else if (args === "cobblestone" || args === "cobble") {
       if (seed <= 810) {
@@ -52,7 +56,7 @@ export default async function openCScase(target, args, username) {
         console.log(item.team + " " + item);
         client.say(
           target,
-          `You unboxed ${item.team}! Price: ${item.price} (Seed: ${seed})`
+          `you unboxed: ${item.team}! Price: ${item.price} (Seed: ${seed})`
         );
       } else if (seed > 810 && seed <= 960) {
         client.say(target, `Purple (Seed: ${seed})`);
@@ -71,21 +75,32 @@ export default async function openCScase(target, args, username) {
       console.log(res.data);
       client.say(target, `Current balance: $${res.data[0].current_bal}`);
     } else if (args === "beg") {
-      client.say(target, `The Fatui handed you some sum! Your balance is now $50,000.`);
-      updateBal(username, 50000);
+      if (moolah <= 15000) {
+        client.say(
+          target,
+          `The Fatui handed you some sum! Your balance is now $50,000 furinaSmug`
+        );
+        updateBal(username, 50000);
+      } else {
+        client.say(target, `Your balance is still high enough PepeWeird`);
+      }
     } else {
-      client.say(target, `Invalid case!`);
+      client.say(target, `Invalid case! nah`);
     }
   } else if (args === "register") {
-    const res = await registerUser(username);
-    console.log(res);
-    if (res.message === "User registered successfully") {
-      client.say(target, `@${username} is now registered. Enjoy! furinaSmug`);
+    if (!isUserRegistered) {
+      const res = await registerUser(username);
+      console.log(res);
+      if (res.message === "User registered successfully") {
+        client.say(target, `@${username} is now registered. Enjoy! furinaSmug`);
+      } else {
+        client.say(
+          target,
+          `Oops, there's an error on our database. Spam tag @sveltebs to fix it xdd`
+        );
+      }
     } else {
-      client.say(
-        target,
-        `Oops, there's an error on our database. Spam tag @sveltebs to fix it xdd`
-      );
+      return;
     }
   } else {
     client.say(
