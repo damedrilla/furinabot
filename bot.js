@@ -24,11 +24,11 @@ export const opts = {
 
 export const client = new tmi.client(opts);
 
-
 client.on("message", onMessageHandler);
 client.on("connected", onConnectedHandler);
 
 client.connect();
+
 async function getDotaPlayer(args) {
   return await fetch(`https://api.opendota.com/api/players/${args}`, {
     method: "GET",
